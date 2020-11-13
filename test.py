@@ -8,7 +8,7 @@ win.title("Tracker")
 win.geometry("220x300+100+100")
 
 # lable creation
-lable = ttk.Label(win, text='Stock name:')
+lable = ttk.Label(win, text='Stock name:' ,font="Times 14")
 lable.grid(row=0, column=0, sticky=tk.W)
 
 #    lable1 = ttk.Label(win, text='Second')
@@ -90,16 +90,66 @@ def calculate():
     number = num.get()
     n = int(number)
     op = float(o_price)
-    latest=float(latest_price)
-    lp=(latest-op)*n
-    per=((latest-op)/op)*100
+    latest = float(latest_price)
+    lp = (latest - op) * n
+    per = ((latest - op) / op) * 100
     lp1 = '{:.2f}'.format(lp)
-    per1='{:.2f}'.format(per)
+    per1 = '{:.2f}'.format(per)
     res1.config(text=lp1)
     res2.config(text=per1)
 
 
 btn1 = ttk.Button(win, text="Calculate", command=calculate)
 btn1.grid(row=6, column=1)
+
+l1 = ttk.Label(win, text='Sold Price:')
+l1.grid(row=9, column=0, sticky=tk.W)
+
+s_old = ttk.StringVar()
+cal5 = ttk.Entry(win, width=16, textvariable=s_old)
+cal5.grid(row=9, column=1)
+
+cal6 = ttk.Label(win, text='Sold Numbers:')
+cal6.grid(row=10, column=0, sticky=tk.W)
+
+s_num = ttk.StringVar()
+cal7 = ttk.Entry(win, width=16, textvariable=s_num)
+cal7.grid(row=10, column=1)
+
+rem = ttk.Label(win, text='Left Stock')
+rem.grid(row=11, column=0, sticky=tk.W)
+
+res3 = ttk.Label(win, text="")
+res3.grid(row=11, column=1)
+
+s_loss = ttk.Label(win, text='Stop Loss')
+s_loss.grid(row=12, column=0, sticky=tk.W)
+
+res4 = ttk.Label(win, text="")
+res4.grid(row=12, column=1)
+
+
+def save():
+    sol_price = s_old.get()
+    sol_num = s_num.get()
+    op = float(sol_price)  # use1
+    ol_num = int(sol_num)
+    number = num.get()
+    n = int(number)
+    left = n + ol_num
+    print(left)
+
+    o_price = old.get()
+    op1 = float(o_price)
+    sl = ((op1 * n) + (op * ol_num)) / left
+    print(sl)
+
+    per1 = '{:.2f}'.format(sl)
+    res3.config(text=left)
+    res4.config(text=per1)
+
+
+btn1 = ttk.Button(win, text="Calculate", command=save)
+btn1.grid(row=13, column=1)
 
 win.mainloop()
